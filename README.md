@@ -14,7 +14,7 @@ Make sure you have redis installed, then run the following:
 git clone git@github.com:arcreative/plugable-notifier.git
 cd pluggable-notifier
 npm install
-cp config.json.example config.json # And edit your values
+cp config.json.example config.json # Don't forget to edit your values and remove comments!
 ```
 
 To run, just run `npm start`!
@@ -23,7 +23,7 @@ To run, just run `npm start`!
 
 See `./config.json.example` (or copy to `config.json`) and edit to your liking.
 
-```json
+```js
 {
   "twilio_account_id": "<YOUR_ACCOUNT_ID>",
   "twilio_account_token": "<YOUR_ACCOUNT_TOKEN>",

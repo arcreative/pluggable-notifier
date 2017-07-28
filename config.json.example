@@ -1,0 +1,20 @@
+{
+  "twilio_account_id": "<YOUR_ACCOUNT_ID>",
+  "twilio_account_token": "<YOUR_ACCOUNT_TOKEN>",
+  "twilio_sms_number": "+17075551111",
+  "notify_numbers": ["+17075559999"],
+  "check_interval": null, // In minutes
+  "notify_interval": null, // In minutes
+  "redis_prefix": null,
+  "watchers": [
+    {
+      "exchange": "kraken",
+      "from": "ETH",
+      "to": "USD",
+      "condition": "result.price < 220",
+      "check_interval": null, // In minutes, overrides main check_interval
+      "notify_interval": null, // In minutes, overrides main notify_interval
+      "defer_first": false
+    }
+  ]
+}

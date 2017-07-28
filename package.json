@@ -1,0 +1,16 @@
+{
+  "name": "pluggable-notifier",
+  "version": "1.0.0",
+  "description": "Pluggable notifier",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adam Robertson <adam@arcreative.net>",
+  "license": "MIT",
+  "dependencies": {
+    "redis": "^2.7.1",
+    "request": "^2.81.0",
+    "twilio": "^3.6.1"
+  }
+}

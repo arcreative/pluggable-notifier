@@ -15,7 +15,7 @@ var getBlockchainPrice = require('./lib/get-blockchain-price');
 // Defaults
 const REDIS_PREFIX = config.redis_prefix || "notify";
 const DEFAULT_CHECK_INTERVAL = config.check_interval || 5; // Minutes
-const DEFAULT_NOTIFY_INTERVAL = config.notify_interval || 15; // Minutes
+const DEFAULT_NOTIFY_INTERVAL = config.notify_interval || 60; // Minutes
 
 // Clear redis keys for all numbers
 config.notify_numbers.forEach(function(number) {

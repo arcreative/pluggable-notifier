@@ -6,6 +6,19 @@ Experiment to cause periodic SMS notifications based on one or more pluggable ac
 
 * Blockchain price
 
+## Installation / getting started
+
+Make sure you have redis installed, then run the following:
+
+```sh
+git clone git@github.com:arcreative/plugable-notifier.git
+cd pluggable-notifier
+npm install
+cp config.json.example config.json # And edit your values
+```
+
+To run, just run `npm start`!
+
 ## Configuration
 
 See `./config.json.example` (or copy to `config.json`) and edit to your liking.

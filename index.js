@@ -1,6 +1,7 @@
 var fs = require('fs');
 var Twilio = require('twilio');
 var redis = require('redis');
+var crypto = require('crypto');
 
 // Load configuration
 var config = require('./config.json');
@@ -18,8 +19,17 @@ const DEFAULT_CHECK_INTERVAL = config.check_interval || 5; // Minutes
 const DEFAULT_NOTIFY_INTERVAL = config.notify_interval || 60; // Minutes
 
 // Clear redis keys for all numbers
-config.notify_numbers.forEach(function(number) {
-  redisClient.del(getRedisKey(number));
+config.watchers.forEach(function(watcher) {
+
+  // Process per-watcher numbers
+  (watcher.notify_numbers || []).forEach(function(number) {
+    redisClient.del(getRedisKey(number, watcher));
+  });
+
+  // Process general numbers for each watcher
+  (config.notify_numbers || []).forEach(function(number) {
+    redisClient.del(getRedisKey(number, watcher));
+  });
 });
 
 // Iterate watchers
@@ -38,10 +48,10 @@ config.watchers.forEach(function(watcher) {
     if (eval(watcher.condition)) {
 
       // Notify all numbers
-      config.notify_numbers.forEach(function(number) {
+      (config.notify_numbers || []).concat(watcher.notify_numbers || []).forEach(function(watcher, number) {
 
         // Check if redis key exists for number
-        redisClient.get(getRedisKey(number), function(err, reply) {
+        redisClient.get(getRedisKey(number, watcher), function(err, reply) {
           if (err) throw err;
 
           // If key is found, don't re-notify
@@ -65,14 +75,14 @@ config.watchers.forEach(function(watcher) {
 
               // Remember not to contact again within interval
               var notifyInterval = (watcher.notify_interval || DEFAULT_NOTIFY_INTERVAL) * 60 - 1;
-              redisClient.set(getRedisKey(number), '1', 'EX', notifyInterval, function (err) {
+              redisClient.set(getRedisKey(number, watcher), '1', 'EX', notifyInterval, function (err) {
                 if (err) console.error('Error setting redis key.');
               });
             }, function(err) {
               console.error('Error sending watcher message to `' + number + '`:' + (err || {}).message);
             });
         });
-      });
+      }.bind(null, watcher));
     }
   });
 
@@ -82,6 +92,12 @@ config.watchers.forEach(function(watcher) {
 });
 
 // Utility functions
-function getRedisKey(number) {
-  return REDIS_PREFIX + ':ignore_notify:' + number;
+function getRedisKey(number, watcher) {
+  var digest = crypto.createHash('md5').update([
+        watcher.exchange,
+        watcher.from,
+        watcher.to,
+        watcher.condition
+      ].join('_')).digest('hex');
+  return REDIS_PREFIX + ':ignore_notify:' + digest + ':' + number;
 }

@@ -28,7 +28,7 @@ See `./config.json.example` (or copy to `config.json`) and edit to your liking.
   "twilio_account_id": "<YOUR_ACCOUNT_ID>",
   "twilio_account_token": "<YOUR_ACCOUNT_TOKEN>",
   "twilio_sms_number": "+17075551111", // Number to send from
-  "notify_numbers": ["+17075559999"],
+  "notify_numbers": ["+17075559999"], // Notifies this number for any watcher
   "check_interval": null, // In minutes
   "notify_interval": null, // In minutes
   "redis_prefix": null, // Optional redis prefix
@@ -38,6 +38,7 @@ See `./config.json.example` (or copy to `config.json`) and edit to your liking.
       "from": "ETH",
       "to": "USD",
       "condition": "result.price < 220", // Eval'd to determine whether to send notification--truthy values will send
+      "notify_numbers": ["+17071231234"], // Notifies these numbers ONLY for this watcher
       "check_interval": null, // In minutes, overrides main check_interval
       "notify_interval": null, // In minutes, overrides main notify_interval
       "defer_first": false

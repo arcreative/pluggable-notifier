@@ -64,7 +64,9 @@ config.watchers.forEach(function(watcher) {
               '\n' +
               'Current price: ' + result.price.toFixed(2) + ' ' + watcher.to + '\n' +
               'Today\'s high: ' + result.high.toFixed(2) + ' ' + watcher.to + '\n' +
-              'Today\'s low: ' + result.low.toFixed(2) + ' ' + watcher.to;
+              'Today\'s low: ' + result.low.toFixed(2) + ' ' + watcher.to + '\n' +
+              '\n' +
+              (new Date().toLocaleString());
           twilioClient.messages.create({
               body: message,
               to: number,

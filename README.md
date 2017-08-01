@@ -34,9 +34,11 @@ See `./config.json.example` (or copy to `config.json`) and edit to your liking.
   "redis_prefix": null, // Optional redis prefix
   "watchers": [
     {
-      "exchange": "kraken",
-      "from": "ETH",
-      "to": "USD",
+      "data": {
+        "exchange": "kraken",
+        "from": "ETH",
+        "to": "USD"
+      },
       "condition": "result.price < 220", // Eval'd to determine whether to send notification--truthy values will send
       "notify_numbers": ["+17071231234"], // Notifies these numbers ONLY for this watcher
       "check_interval": null, // In minutes, overrides main check_interval

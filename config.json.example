@@ -8,9 +8,11 @@
   "redis_prefix": null,
   "watchers": [
     {
-      "exchange": "kraken",
-      "from": "ETH",
-      "to": "USD",
+      "data": {
+        "exchange": "kraken",
+        "from": "ETH",
+        "to": "USD",
+      },
       "condition": "result.price < 220",
       "notify_numbers": ["+17071231234"],
       "check_interval": null, // In minutes, overrides main check_interval

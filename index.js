@@ -35,7 +35,7 @@ config.watchers.forEach(function(watcher) {
 // Iterate watchers
 console.info('Starting watchers.');
 config.watchers.forEach(function(watcher) {
-  var runFn = getBlockchainPrice.bind(null, watcher.exchange, watcher.from, watcher.to, function(err, result) {
+  var runFn = getBlockchainPrice.bind(null, watcher.data.exchange, watcher.data.from, watcher.data.to, function(err, result) {
     if (err) {
       if (typeof err === 'string') {
         throw err;
@@ -58,13 +58,13 @@ config.watchers.forEach(function(watcher) {
           if (reply) return;
 
           // Send message
-          var message = watcher.from + '/' + watcher.to + ' price alert: ' + result.price.toFixed(2) + ' ' + watcher.to + '!\n' +
+          var message = watcher.data.from + '/' + watcher.data.to + ' price alert: ' + result.price.toFixed(2) + ' ' + watcher.data.to + '!\n' +
               '\n' +
               'Price has just triggered your threshold of `' + watcher.condition + '`\n' +
               '\n' +
-              'Current price: ' + result.price.toFixed(2) + ' ' + watcher.to + '\n' +
-              'Today\'s high: ' + result.high.toFixed(2) + ' ' + watcher.to + '\n' +
-              'Today\'s low: ' + result.low.toFixed(2) + ' ' + watcher.to + '\n' +
+              'Current price: ' + result.price.toFixed(2) + ' ' + watcher.data.to + '\n' +
+              'Today\'s high: ' + result.high.toFixed(2) + ' ' + watcher.data.to + '\n' +
+              'Today\'s low: ' + result.low.toFixed(2) + ' ' + watcher.data.to + '\n' +
               '\n' +
               (new Date().toLocaleString());
           twilioClient.messages.create({
@@ -96,9 +96,9 @@ config.watchers.forEach(function(watcher) {
 // Utility functions
 function getRedisKey(number, watcher) {
   var digest = crypto.createHash('md5').update([
-        watcher.exchange,
-        watcher.from,
-        watcher.to,
+        watcher.data.exchange,
+        watcher.data.from,
+        watcher.data.to,
         watcher.condition
       ].join('_')).digest('hex');
   return REDIS_PREFIX + ':ignore_notify:' + digest + ':' + number;

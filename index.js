@@ -60,13 +60,14 @@ config.watchers.forEach(function(watcher) {
           if (reply) return;
 
           // Send message
-          var message = watcher.data.from + '/' + watcher.data.to + ' price alert: ' + result.price.toFixed(2) + ' ' + watcher.data.to + '!\n' +
+          var precision = watcher.precision || 2;
+          var message = watcher.data.from + '/' + watcher.data.to + ' price alert: ' + result.price.toFixed(precision) + ' ' + watcher.data.to + '!\n' +
               '\n' +
               'Price has just triggered your threshold of `' + watcher.condition + '`\n' +
               '\n' +
-              'Current price: ' + result.price.toFixed(2) + ' ' + watcher.data.to + '\n' +
-              'Today\'s high: ' + result.high.toFixed(2) + ' ' + watcher.data.to + '\n' +
-              'Today\'s low: ' + result.low.toFixed(2) + ' ' + watcher.data.to + '\n' +
+              'Current price: ' + result.price.toFixed(precision) + ' ' + watcher.data.to + '\n' +
+              'Today\'s high: ' + result.high.toFixed(precision) + ' ' + watcher.data.to + '\n' +
+              'Today\'s low: ' + result.low.toFixed(precision) + ' ' + watcher.data.to + '\n' +
               '\n' +
               (new Date().toLocaleString());
           twilioClient.messages.create({

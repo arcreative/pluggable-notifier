@@ -64,7 +64,8 @@ See `./config.json.example` (or copy to `config.json`) and edit to your liking.
       "notify_numbers": ["+17071231234"], // Notifies these numbers ONLY for this watcher
       "check_interval": null, // In minutes, overrides main check_interval
       "notify_interval": null, // In minutes, overrides main notify_interval
-      "defer_first": false
+      "defer_first": false,
+      "precision": 4 // Decimal places, default 2
     }
   ]
 }
